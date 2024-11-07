@@ -8,10 +8,13 @@
 /***** Body *****/
 body {
   background-image: url("../images/site/small_check.jpg");
+  max-width: 1600px;
+  font-size: 18px;
 }
 #wrapper {
   background-color: white;
-  border: 5px solid #972f2f;
+  color: black;
+  border: 5px solid #882a2a;
   border-radius: 10px;
   padding: 1%;
   margin: 7%;
@@ -24,19 +27,16 @@ header {
   align-content: center;
   margin-top: 2%;
 }
-
 .siteName {
   font-size: 2.5em;
 }
-
 #tools {
   justify-self: end;
   align-self: center;
 }
-
-#top-header a, .topnav a {
+#top-header a {
   text-decoration: none;
-  color: #972f2f;
+  color: #882a2a;
 }
 
 /***** Nav *****/
@@ -47,24 +47,37 @@ header {
   background-color: black;
   margin-top: 2%;
 }
-
 .topnav a {
   color: white;
+  text-decoration: none;
   padding: 1%;
 }
-
 .topnav a:hover {
-  background-color: #972f2f;
+  background-color: #882a2a;
 }
 
 /***** Hero *****/
-.hero-image {
-  background-image: url('../images/vehicles/delorean.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 60%;
+#hero {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
-h2 {
+#hero-box {
+  grid-column: 1/5;
+  grid-row: 1/2;
+  z-index: 0;
+}
+#hero-msg{
+  grid-column: 1/4;
+  grid-row: 1/2;
+  z-index: 1;
+}
+#hero-img {
+  width: 85%;
+  display: block;
+  margin: 7% auto;
+}
+#hero-msg h2 {
+  text-align: left;
   margin: 0;
 }
 #features {
@@ -74,17 +87,15 @@ h2 {
 }
 #car-info {
   display: inline-block;
-  margin: 5% 0% 8% 4%;
-  color: #972f2f;
-  background-color: rgba(255, 255, 255, .5);
+  margin: 4% 0% 6% 5%;
+  color: #882a2a;
+  background-color: rgba(249, 237, 237, 0.4);
   padding: 2%;
 }
-
 #own {
-  background-color: #972f2f;
+  background-color: #882a2a;
   color: white;
   border-radius: 5px;
-  border-color: none;
   padding: 3%;
   margin-top: 5%;
 }
@@ -94,11 +105,54 @@ h2 {
   margin-top: 1%;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 6%;
 }
 #ratings {
   padding-left: 15px;
 }
-
 .grid-item li {
   padding: 2% 0;
+}
+
+/***** Upgrades *****/
+#upgrade-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 4%;
+  row-gap: 8%;
+}
+.upgrade-items {
+  text-align: center;
+  margin: 0;
+}
+.img-background {
+  background-color: #882a2a;
+  padding: 1% 40%;
+  height: 70%;
+}
+.upgrade-img {
+  display: block;
+  width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+  body{
+    font-size: 12px;
+  }
+  .siteName {
+    font-size: 2em;
+  }
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 2%;
+    font-size: 1.2em;
+  }
+  #vehicle-reviews {
+    grid-row: 1/2;
+  }
+  #upgrade-container {
+    row-gap: 10;
+    object-fit: contain;
+  }
 }
