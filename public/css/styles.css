@@ -29,7 +29,9 @@ header {
   margin-top: 2%;
 }
 .siteName {
+  display: flex;
   font-size: 2em;
+  align-items: center;
 }
 #logo {
   max-height: 40px;
