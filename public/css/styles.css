@@ -10,7 +10,7 @@ body {
   background-image: url("../images/site/small_check.jpg");
   font-size: 12px;
   font-family: "Antic Didone", serif;
-  font-weight: 700;
+  font-weight: 600;
 }
 #wrapper {
   background-color: white;
@@ -28,6 +28,9 @@ header {
   align-content: center;
   margin-top: 2%;
 }
+h1, h2, h3 {
+  font-weight: 900;
+}
 .siteName {
   display: flex;
   font-size: 2em;
@@ -41,8 +44,8 @@ header {
   align-self: center;
   text-transform: uppercase;
 }
-#tools a:hover {
-  font-weight: 900;
+#top-header a:hover {
+  font-size: 1.25em;
 }
 #top-header a {
   text-decoration: none;
@@ -64,6 +67,7 @@ header {
 }
 .topnav a:hover {
   background-color: #882a2a;
+  font-size: 1.1em;
 }
 .active:before {
   content: "* ";
