@@ -32,8 +32,8 @@ SELECT
 	inventory.*,
 	classification.classification_name
 	FROM inventory
-	INNER JOIN
-	classification ON inventory.classification_id = classification.classification_id
+	INNER JOIN classification 
+		ON inventory.classification_id = classification.classification_id
 	WHERE classification.classification_name = 'Sport';
 	
 --Task 6
