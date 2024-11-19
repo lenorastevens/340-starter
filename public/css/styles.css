@@ -8,6 +8,7 @@
 /***** Body *****/
 body {
   background-image: url("../images/site/small_check.jpg");
+  background-repeat: repeat-x;
   font-size: 13px;
   font-family: "Antic Didone", serif;
   font-style: normal;
@@ -20,6 +21,10 @@ body {
   border-radius: 10px;
   padding: 1%;
   margin: 1% 7% 1% 7%;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
 }
 
 /***** Header *****/
@@ -52,18 +57,23 @@ header {
 }
 
 /***** Nav *****/
-.topnav {
+#myTopNav {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   background-color: black;
   margin-top: 2%;
+  padding: 0;
+}
+li.topnav {
+  padding: 2%;
+  text-decoration: none;
 }
 .topnav a {
   color: white;
   text-decoration: none;
-  padding: 4% 2%;
 }
+
 .topnav a:hover {
   background-color: #882a2a;
   font-size: 1.1em;
@@ -129,16 +139,13 @@ h3 {
   margin-top: 5%;
 }
 
-/***** Grid *****/
+/***** Home Grid *****/
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(2, 1fr);
   gap: 2%;
   font-size: 1.2em;
-}
-#ratings {
-  padding-left: 15px;
 }
 .grid-item li {
   padding: 2% 0;
@@ -172,6 +179,57 @@ h3 {
   object-fit: contain;
 }
 
+/***** Classification Body *****/
+#class-title {
+  text-align: center;
+  margin: 1%;
+}
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min-content, 280px));
+  grid-gap: .5%;
+  justify-content: center;
+  width: 90%;
+  margin: 0 auto;
+}
+.vehicle-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 130px auto;
+  text-align: center;
+  border: 3px ridge #882a2a;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px 0 rgb(66, 50, 50);
+  font-size: 12px;
+  gap: 0;
+  align-items: center;
+}
+.vehicle-card img {
+  max-height: 125px;
+  margin: 0;
+  padding: 0;
+}
+hr {
+  margin: 0;
+}
+.namePrice h2 {
+  margin: 2.5%;
+}
+.namePrice a {
+  color: black;
+}
+.namePrice a:hover {
+  color: #882a2a;
+}
+.namePrice {
+  padding-bottom: 2.5%;
+}
+
+/***** Footer  *****/
+footer {
+  padding-top: 5%;
+}
+
 @media only screen and (min-width: 800px) {
   body{
     font-size: 18px;
@@ -182,9 +240,6 @@ h3 {
   }
   #logo {
     max-height: 60px;
-  }
-  .topnav a {
-    padding: 2.5%;
   }
   h1 {
     font-size: 2.5em;
@@ -208,5 +263,12 @@ h3 {
   #vehicle-reviews {
     grid-row: 1/2;
     grid-column: 2/3;
+  }
+  #inv-display {
+    gap: 4%;
+  }
+  .vehicle-card {
+    grid-template-rows: 150px 80px;
+    font-size: 10px;
   }
 }
