@@ -229,6 +229,9 @@ hr {
 .namePrice {
   padding-bottom: 2.5%;
 }
+.vehicle-price {
+  font-size: 1.4em;
+}
 
 /***** Vehicle Details *****/
 #vehicle-container {
@@ -250,6 +253,15 @@ hr {
   text-transform: uppercase;
 }
 
+
+/***** Error Message *****/
+#error-message, .notice {
+  text-align: center;
+}
+#fake-error {
+  text-decoration: none;
+  color: #882a2a;
+}
 
 /***** Footer  *****/
 footer {
