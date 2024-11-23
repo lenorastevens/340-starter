@@ -11,6 +11,7 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
+const detailRoute = require("./routes/detailRoute")
 const baseController = require("./controllers/baseController")
 const utilities = require("./utilities/index")
 
@@ -32,6 +33,9 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory Route
 app.use("/inv", inventoryRoute)
+
+// Detail Route
+app.use("/inv/detail", detailRoute)
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {

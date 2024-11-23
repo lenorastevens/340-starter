@@ -64,6 +64,9 @@ header {
   background-color: black;
   margin-top: 2%;
   padding: 0;
+  border: 3px ridge #882a2a;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px 0 rgb(66, 50, 50);
 }
 li.topnav {
   padding: 2%;
@@ -117,7 +120,6 @@ h3 {
 #hero-msg h2 {
   text-align: left;
   margin: 0;
-  
 }
 #features {
   padding-left: 0;
@@ -134,7 +136,8 @@ h3 {
 #own {
   background-color: #882a2a;
   color: white;
-  border-radius: 5px;
+  border-radius: 8px;
+  border: 3px ridge black;
   padding: 3%;
   margin-top: 5%;
 }
@@ -160,6 +163,8 @@ h3 {
   grid-template-columns: 1fr 1fr;
   column-gap: 4%;
   row-gap: 8%;
+  row-gap: 10px;
+  object-fit: contain;
 }
 .upgrade-items {
   text-align: center;
@@ -169,15 +174,14 @@ h3 {
   background-color: #882a2a;
   padding: 1% 40%;
   height: 70%;
+  border: 3px ridge black;
+  border-radius: 8px;
 }
 .upgrade-img {
   display: block;
   width: 100%;
 }
-#upgrade-container {
-  row-gap: 10px;
-  object-fit: contain;
-}
+
 
 /***** Classification Body *****/
 #class-title {
@@ -206,6 +210,7 @@ h3 {
 }
 .vehicle-card img {
   max-height: 125px;
+  border-radius: 8px;
   margin: 0;
   padding: 0;
 }
@@ -225,9 +230,31 @@ hr {
   padding-bottom: 2.5%;
 }
 
+/***** Vehicle Details *****/
+#vehicle-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 2%;
+  gap: 2%
+}
+.vehicle-img {
+  width: 100%;
+  border-radius: 15px;
+}
+#detail-title {
+  text-decoration: 2px underline #882a2a;
+}
+.first-word {
+  color: #882a2a;
+  font-size: 1.1em;
+  text-transform: uppercase;
+}
+
+
 /***** Footer  *****/
 footer {
   padding-top: 5%;
+  margin-top: 2%;
 }
 
 @media only screen and (min-width: 800px) {
@@ -270,5 +297,10 @@ footer {
   .vehicle-card {
     grid-template-rows: 150px 80px;
     font-size: 10px;
+  }
+  #vehicle-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
   }
 }
