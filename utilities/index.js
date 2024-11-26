@@ -99,9 +99,28 @@ Util.buildVehicleDetailsGrid = async function (details) {
 }
 
 /* **************************************
-* Build the fake error view HTML
+* Build the account login view HTML
 * ************************************ */
+Util.buildLogin = async function () {
+  console.log("getting view")
+  let form;
+  form = `
+  <form class="form-container">
+    <label class="login">Email:
+      <input type="text" placeholder="enter@validEmail.com" name="account_email" required>
+    </label>
+    
 
+    <label class="login">Password: 
+    <input type="password" placeholder="xxx123" name="account_password" required>
+    </label>
+    
+    <button id="login-btn" type="submit">Login</button>
+    <span class="register">No account? <a href="#">Sign-Up</a></span>
+  </form>
+  `;
+  return form
+}
 
 /* ****************************************
  * Middleware For Handling Errors
