@@ -101,22 +101,55 @@ Util.buildVehicleDetailsGrid = async function (details) {
 /* **************************************
 * Build the account login view HTML
 * ************************************ */
-Util.buildLogin = async function () {
-  console.log("getting view")
+Util.buildLoginForm = async function () {
   let form;
   form = `
   <form class="form-container">
-    <label class="login">Email:
-      <input type="text" placeholder="enter@validEmail.com" name="account_email" required>
-    </label>
-    
+    <fieldset>
+      <label class="login">Email:
+        <input type="text" placeholder="enter@validEmail.com" name="account_email" required>
+      </label>
+      
 
-    <label class="login">Password: 
-    <input type="password" placeholder="xxx123" name="account_password" required>
-    </label>
-    
-    <button id="login-btn" type="submit">Login</button>
-    <span class="register">No account? <a href="#">Sign-Up</a></span>
+      <label class="login">Password: 
+      <input type="password" placeholder="xxx123" name="account_password" required>
+      </label>
+      
+      <button id="login-btn" type="submit">Login</button>
+      <span class="register">No account? <a href="/account/register">Sign-Up</a></span>
+    </fieldset>
+    </form>
+  `;
+  return form
+}
+
+/* **************************************
+* Build the account login view HTML
+* ************************************ */
+Util.buildRegistrationForm = async function () {
+  let form;
+  form = `
+  <form class="form-container">
+    <span>All fields are required.</span>
+    <fieldset>
+      <label class="login">First Name:
+        <input type="text" name="account_firstname" required>
+      </label>
+
+      <label class="login">Last Name:
+        <input type="text" name="account_lastname" required>
+      </label>
+
+      <label class="login">Email:
+        <input type="email" placeholder="enter@validEmail.com" name="account_email" required>
+      </label>
+      
+      <label class="login">Password: 
+      <input type="password" placeholder="Something@12" name="account_password" required>
+      </label>
+      <span>*Passwords must be minimum of 12 charaters and include 1 capital letter, 1 number, and 1 special character.</span>
+      <button id="login-btn" type="submit">Register</button>
+    </fieldset>
   </form>
   `;
   return form

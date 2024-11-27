@@ -8,7 +8,7 @@ async function buildLoginView(req, res, next) {
   try {
     let nav = await utilities.getNav()
     
-    const form = await utilities.buildLogin()
+    const form = await utilities.buildLoginForm()
 
     res.render("account/login", {
       title: "Login",
@@ -20,5 +20,18 @@ async function buildLoginView(req, res, next) {
     res.status(500).send("An error occurred while loading the login page.");
   }
 }
+
+async function buildRegisterView(req, res, next) {
+  let nav = await utilities.getNav()
+
+  const form = await utilities.buildRegistrationForm()
   
-  module.exports = { buildLoginView }
+  res.render("account/register", {
+    title: "Register",
+    nav,
+    errors: null,
+    form
+  })
+}
+  
+  module.exports = { buildLoginView, buildRegisterView }
