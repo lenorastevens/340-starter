@@ -9,7 +9,6 @@ async function buildLoginView(req, res, next) {
   try {
     let nav = await utilities.getNav()
     
-    const form = await utilities.buildLoginForm()
     const notice = req.flash("notice")[0] || null;
 
     res.render("account/login", {
@@ -17,7 +16,6 @@ async function buildLoginView(req, res, next) {
       nav,
       errors: null,
       notice,
-      form
     });
   } catch (error) {
     console.error("Error building login view:", error);
@@ -29,15 +27,11 @@ async function buildRegisterView(req, res, next) {
   try{
   let nav = await utilities.getNav()
 
-  const form = await utilities.buildRegistrationForm()
-  const notice = req.flash("notice")[0] || null;
   
   res.render("account/register", {
     title: "Register",
     nav,
     errors: null,
-    notice,
-    form
   });
   } catch (error) {
     console.error("Error building login view:", error);
@@ -65,13 +59,10 @@ async function registerAccount(req, res) {
       `Congratulations, you\'re registered ${account_firstname}. Please log in.`
     )
 
-    const form = await utilities.buildLoginForm()
-
     res.status(201).render("account/login", {
       title: "Login",
       nav,
       notice: req.flash("notice")[0],
-      form
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")

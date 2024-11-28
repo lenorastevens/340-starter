@@ -101,59 +101,59 @@ Util.buildVehicleDetailsGrid = async function (details) {
 /* **************************************
 * Build the account login view HTML
 * ************************************ */
-Util.buildLoginForm = async function () {
-  let form;
-  form = `
-  <form class="form-container" action="/account/register"  method="post">
-    <fieldset>
-      <label class="login">Email:
-        <input type="text" placeholder="enter@validEmail.com" name="account_email" required>
-      </label>
+// Util.buildLoginForm = async function () {
+//   let form;
+//   form = `
+//   <form class="form-container" action="/account/register"  method="post">
+//     <fieldset>
+//       <label class="login">Email:
+//         <input type="email" placeholder="enter@validEmail.com" name="account_email" required>
+//       </label>
       
 
-      <label class="login">Password: 
-      <input type="password" placeholder="xxx123" name="account_password" required>
-      </label>
-      
-      <button id="login-btn" type="submit">Login</button>
-      <span class="register">No account? <a href="/account/register">Sign-Up</a></span>
-    </fieldset>
-    </form>
-  `;
-  return form
-}
+//       <label class="login">Password: 
+//       <input type="password" placeholder="xxx123" name="account_password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$">
+//       </label>
+//       <span class="form-msg">* Passwords must be at least 12 characters, one must be a number, one must be a lowercase letter, one must be a capital letter, and one must be a non-alphanumeric character.</span>
+//       <button id="login-btn" type="submit">Login</button>
+//       <span class="register">No account? <a href="/account/register">Sign-Up</a></span>
+//     </fieldset>
+//     </form>
+//   `;
+//   return form
+// }
 
 /* **************************************
 * Build the account login view HTML
 * ************************************ */
-Util.buildRegistrationForm = async function () {
-  let form;
-  form = `
-  <form class="form-container" action="/account/register"  method="post">
-    <span>All fields are required.</span>
-    <fieldset>
-      <label class="login">First Name:
-        <input type="text" name="account_firstname" required>
-      </label>
+// Util.buildRegistrationForm = async function () {
+//   let form;
+//   form = `
+//   <form class="form-container" action="/account/register"  method="post">
+//     <span class="form-msg">All fields are required.</span>
+//     <fieldset>
+//       <label class="login">First Name:
+//         <input type="text" name="account_firstname" required>
+//       </label>
 
-      <label class="login">Last Name:
-        <input type="text" name="account_lastname" required>
-      </label>
+//       <label class="login">Last Name:
+//         <input type="text" name="account_lastname" required>
+//       </label>
 
-      <label class="login">Email:
-        <input type="email" placeholder="enter@validEmail.com" name="account_email" required>
-      </label>
+//       <label class="login">Email:
+//         <input type="email" placeholder="enter@validEmail.com" name="account_email" required>
+//       </label>
       
-      <label class="login">Password: 
-      <input type="password" placeholder="Something@12" name="account_password" required>
-      </label>
-      <span>*Passwords must be minimum of 12 charaters and include 1 capital letter, 1 number, and 1 special character.</span>
-      <button id="login-btn" type="submit">Register</button>
-    </fieldset>
-  </form>
-  `;
-  return form
-}
+//       <label class="login">*Password: 
+//       <input type="password" placeholder="Something@12" name="account_password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$" required>
+//       </label>
+//       <span class="form-msg">* Passwords must be at least 12 characters, one must be a number, one must be a lowercase letter, one must be a capital letter, and one must be a non-alphanumeric character.</span>
+//       <button class="register" id="login-btn" type="submit">Register</button>
+//     </fieldset>
+//   </form>
+//   `;
+//   return form
+// }
 
 /* ****************************************
  * Middleware For Handling Errors

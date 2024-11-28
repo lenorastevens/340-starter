@@ -272,24 +272,43 @@ form {
   padding: 2%;
 }
 
+fieldset {
+  border: 3px ridge white;
+  border-radius: 8px;
+  margin-top: 3%;
+}
+
 input[type=text], input[type=password], input[type=email] {
   width: 100%;
   display: inline-block;
   border: 1px ridge black;
   border-radius: 5px;
-  padding: 1%;
+  padding: 2%;
+  margin-bottom: 3%;
 }
 
+input:required:invalid, input:focus:invalid {
+  border: 3px ridge black;
+}
+
+input:required:valid {
+  border: 3px ridge white;
+}
+
+.form-msg {
+  margin-bottom: 3%;
+}
 #login-btn {
   display: block;
   width: 100%;
   border: 1px ridge black;
   border-radius: 5px;
   padding: 1%;
+  margin-bottom: 3%;
+  margin-top: 3%;
 }
-span.register {
-  padding: 1%;
-  
+.register a {
+  color: white;
 }
 
 /***** Error Message *****/
