@@ -104,7 +104,7 @@ Util.buildVehicleDetailsGrid = async function (details) {
 Util.buildLoginForm = async function () {
   let form;
   form = `
-  <form class="form-container">
+  <form class="form-container" action="/account/register"  method="post">
     <fieldset>
       <label class="login">Email:
         <input type="text" placeholder="enter@validEmail.com" name="account_email" required>
@@ -129,7 +129,7 @@ Util.buildLoginForm = async function () {
 Util.buildRegistrationForm = async function () {
   let form;
   form = `
-  <form class="form-container">
+  <form class="form-container" action="/account/register"  method="post">
     <span>All fields are required.</span>
     <fieldset>
       <label class="login">First Name:

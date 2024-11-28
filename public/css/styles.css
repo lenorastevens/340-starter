@@ -293,8 +293,10 @@ span.register {
 }
 
 /***** Error Message *****/
-#error-message, .notice {
+#error-message, .notice, .error-message {
   text-align: center;
+  padding: 1%;
+  color: #882a2a;
 }
 #fake-error {
   text-decoration: none;

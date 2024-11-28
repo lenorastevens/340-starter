@@ -4,6 +4,8 @@
         res.redirect('/')
     } %>
     
-<%# messages() %>
-    
-    <%- form %>
+<% if (notice) { %>
+    <div class="error-message"><%= notice %></div>
+    <% } %> 
+
+<%- form %>

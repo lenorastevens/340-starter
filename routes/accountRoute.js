@@ -7,4 +7,8 @@ const utilities = require("../utilities/")
 router.get("/login", utilities.handleErrors(accountController.buildLoginView))
 router.get("/register", utilities.handleErrors(accountController.buildRegisterView))
 
+// Process Registration Post method
+router.post('/register', utilities.handleErrors(accountController.registerAccount))
+
+
 module.exports = router;
