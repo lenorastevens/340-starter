@@ -4,28 +4,30 @@
         res.redirect('/')
     } %>
     
+    <%- messages() %>
+
     <% if (errors) { %>
-        <ul class="notice">
-       <% errors.array().forEach(error => { %>
-         <li><%= error.msg %></li>
-      <%  }) %>
-       </ul>
-      <% } %>
+      <ul class="notice">
+     <% errors.array().forEach(error => { %>
+       <li><%= error.msg %></li>
+    <%  }) %>
+     </ul>
+    <% } %>
     
       <div>
         <form class="form-container" action="/account/register"  method="post">
             <span class="form-msg">All fields are required.</span>
             <fieldset>
               <label class="login">First Name:
-                <input type="text" name="account_firstname" required>
+                <input type="text" name="account_firstname" id="accountFirstname" required value="<%= locals.account_firstname %>">
               </label>
         
               <label class="login">Last Name:
-                <input type="text" name="account_lastname" required>
+                <input type="text" name="account_lastname" id="accountLastname" required value="<%= locals.account_lastname %>">
               </label>
         
               <label class="login">Email:
-                <input type="email" placeholder="enter@validEmail.com" name="account_email" required>
+                <input type="email" name="account_email" id="accountEmail" placeholder="Enter a valid email address" required value="<%= locals.account_email %>">
               </label>
               
               <label class="login">*Password: 

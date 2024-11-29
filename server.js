@@ -12,7 +12,7 @@ const app = express()
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
 const detailRoute = require("./routes/detailRoute")
-const fakeError = require("./routes/fakeErrorRoute")
+const fakeError = require("./routes/errorRoute")
 const accountRoute = require("./routes/accountRoute")
 const baseController = require("./controllers/baseController")
 const utilities = require("./utilities/index")
@@ -35,7 +35,7 @@ app.use(session({
 }))
 
 // Express Messages Middleware
-app.use(require('express-flash')())
+app.use(require('connect-flash')())
 app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
@@ -70,7 +70,7 @@ app.use("/inv/detail", detailRoute)
 app.use("/account", accountRoute)
 
 // Intention Error Route
-app.use("/routes", fakeError)
+app.use("/errors", fakeError)
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
@@ -82,20 +82,26 @@ app.use(async (req, res, next) => {
 * Place after all other middleware
 *************************/
 app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav();
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`);
-  let message;
-  if(err.status === 404){ 
-    message = err.message;
-  } else {
-    message = err.message || 'Oh no! There was a crash. Maybe try a different route?';
-  }
-  res.status(err.status || 500).render("errors/error", {
+  let nav = await utilities.getNav()
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+  console.log(err.message)
+  res.render("errors/error", {
     title: err.status || 'Server Error',
-    message,
-    nav
-  });
-});
+    nav,
+    message: err.message
+  })
+  // let message;
+  // if(err.status === 404){ 
+  //   message = err.message;
+  // } else {
+  //   message = err.message || 'Oh no! There was a crash. Maybe try a different route?';
+  // }
+  // res.status(err.status || 500).render("errors/error", {
+  //   title: err.status || 'Server Error',
+  //   message,
+  //   nav
+  // });
+})
 
 /* ***********************
  * Local Server Information

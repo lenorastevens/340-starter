@@ -27,11 +27,18 @@ ul {
   list-style-type: none;
   padding-left: 1%;
 }
-#messages ul {
-  text-align: left;
-  list-style-type: square;
-  color: rgb(12, 67, 169);
-  margin-left: 8%;
+#messages ul, #error-message, .notice, .error-message {
+  text-align: center;
+  width: 60%; 
+  background-color: #882a2a;
+  color: white;
+  border: 3px ridge black;
+  border-radius: 8px;
+  padding: 2%; 
+  margin: auto;
+}
+.notice li, .error-message li, #error-mesage a, #messages ul li {
+  color: white;
 }
 
 /***** Header *****/
@@ -312,14 +319,14 @@ input:required:valid {
 }
 
 /***** Error Message *****/
-#error-message, .notice, .error-message {
+/* #error-message, .notice, .error-message {
   text-align: center;
   padding: 1%;
   color: #882a2a;
-}
+} */
 #fake-error {
   text-decoration: none;
-  color: #882a2a;
+  color:#882a2a;
 }
 
 /***** Footer  *****/

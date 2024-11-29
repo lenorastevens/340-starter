@@ -1,5 +1,4 @@
 const utilities = require("../utilities/")
-const invModel = require("../models/inventory-model")
 const accountModel = require("../models/account-model")
 
 /* ****************************************
@@ -8,15 +7,12 @@ const accountModel = require("../models/account-model")
 async function buildLoginView(req, res, next) {
   try {
     let nav = await utilities.getNav()
-    
-    const notice = req.flash("notice")[0] || null;
 
     res.render("account/login", {
       title: "Login",
       nav,
-      errors: null,
-      notice,
-    });
+      errors: null
+    })
   } catch (error) {
     console.error("Error building login view:", error);
     res.status(500).send("An error occurred while loading the login page.");
@@ -25,14 +21,13 @@ async function buildLoginView(req, res, next) {
 
 async function buildRegisterView(req, res, next) {
   try{
-  let nav = await utilities.getNav()
+    let nav = await utilities.getNav()
 
-  
-  res.render("account/register", {
-    title: "Register",
-    nav,
-    errors: null,
-  });
+    res.render("account/register", {
+      title: "Register",
+      nav,
+      errors: null
+    })
   } catch (error) {
     console.error("Error building login view:", error);
     res.status(500).send("An error occurred while building registration view.");
@@ -62,17 +57,44 @@ async function registerAccount(req, res) {
     res.status(201).render("account/login", {
       title: "Login",
       nav,
-      notice: req.flash("notice")[0],
+      errors:null
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")
     res.status(501).render("account/register", {
       title: "Registration",
       nav,
-      notice: req.flash("notice")[0]
     })
   }
 }
 
+/* *************************
+*  Process Registration
+* *********************** */
+async function checkLogin(req, res) {
+  let nav = await utilities.getNav()
+  const { account_email, account_password} = req.body
+
+  const userData = await accountModel.checkLogin(account_email)
+
+  if (account_password === userData.account_password) {
+    req.flash(
+      "notice",
+      `Login for ${userData.account_firstname} was sucessful. Enjoy the site!`
+    )
+    res.status(201).render("account/login", {
+      title: "Login", 
+      nav,
+      errors:null
+    })
+
+  } else {
+    req.flash("notice", "Sorry, the login failed. Please try again.")
+    res.status(501).render("account/login", {
+      title: "Login",
+      nav
+    })
+  }
+}
   
-  module.exports = { buildLoginView, buildRegisterView, registerAccount }
+module.exports = { buildLoginView, buildRegisterView, registerAccount, checkLogin }
