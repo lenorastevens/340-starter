@@ -17,15 +17,7 @@ router.post(
     utilities.handleErrors(accountController.registerAccount)
 )
 
-// Process the login attempt
-// router.post(
-//     "/login",
-//     (req, res) => {
-//       res.status(200).send('login process')
-//     }
-//   )
-
-// Possible way to check login
+// Process login to verify login data
 router.post(
     '/login',
     logValidate.loginRules(), 
