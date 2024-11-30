@@ -8,7 +8,6 @@ const invCont = {}
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId
-  console.log(req.params)
   try {
     const data = await invModel.getInventoryByClassificationId(classification_id)
   

@@ -98,6 +98,11 @@ Util.buildVehicleDetailsGrid = async function (details) {
   return grid
 }
 
+Util.buildClassificationList = async function () {
+  let data = await invModel.getClassifications()
+  return data.rows
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

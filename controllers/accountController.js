@@ -72,7 +72,7 @@ async function registerAccount(req, res) {
     res.status(201).render("account/login", {
       title: "Login",
       nav,
-      errors:null
+      errors: null
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")
@@ -84,7 +84,7 @@ async function registerAccount(req, res) {
 }
 
 /* *************************
-*  Process Registration
+*  Process Login
 * *********************** */
 async function checkLogin(req, res) {
   let nav = await utilities.getNav()
