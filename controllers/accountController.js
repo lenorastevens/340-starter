@@ -92,19 +92,28 @@ async function checkLogin(req, res) {
 
   const userData = await accountModel.checkLogin(account_email)
 
-  if (account_password === userData.account_password) {
-    req.flash(
-      "notice",
-      `Login for ${userData.account_firstname} was sucessful. Enjoy the site!`
-    )
-    res.status(201).render("account/login", {
-      title: "Login", 
-      nav,
-      errors:null
-    })
+  if (userData) {
+    const isPasswordValid = await bcrypt.compare(account_password, userData.account_password)
 
+    if (isPasswordValid) {
+      req.flash(
+        "notice",
+        `Login for ${userData.account_firstname} was sucessful. Enjoy the site!`
+      )
+      res.status(201).render("account/login", {
+        title: "Login", 
+        nav,
+        errors:null
+      })
+    } else {
+      req.flash("notice", "Sorry, the login failed. Please try again.")
+      res.status(501).render("account/login", {
+        title: "Login",
+        nav
+      })
+    }
   } else {
-    req.flash("notice", "Sorry, the login failed. Please try again.")
+    req.flash("notice", "Sorry, the login failed. User not found.")
     res.status(501).render("account/login", {
       title: "Login",
       nav
