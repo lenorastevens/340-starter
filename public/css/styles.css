@@ -268,14 +268,14 @@ hr {
   text-transform: uppercase;
 }
 
-/***** Login Form *****/
+/***** Forms *****/
 form {
   border: 3px ridge black;
   border-radius: 8px;
   box-shadow: 0 3px 6px 0 rgb(66, 50, 50);
   background-color: #882a2a;
   color: white;
-  width: 85%;
+  width: 90%;
   margin: auto;
   padding: 2%;
   font-size: 1.1em;
