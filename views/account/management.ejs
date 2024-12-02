@@ -1,0 +1,23 @@
+<% if (title) { %>
+    <h1 id="class-title"><%= title %></h1>
+    <% } else {
+        res.redirect('/')
+    } %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<div id="acct-management">
+    <h2 id="acct-title">Welcome <%= locals.accountData.account_firstname %> <%= locals.accountData.account_lastname %>!</h2>
+    <ul>
+        <li><a>Edit Account Information</a></li>
+    </ul>
+    
+</div>

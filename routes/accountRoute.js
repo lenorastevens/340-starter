@@ -6,6 +6,11 @@ const regValidate = require('../utilities/account-validation')
 const logValidate = require('../utilities/login-validation')
 
 // Account View Route
+router.get(
+    "/",
+    utilities.checkLogin, 
+    utilities.handleErrors(accountController.buildAcctManagement)
+)
 router.get("/login", utilities.handleErrors(accountController.buildLoginView))
 router.get("/register", utilities.handleErrors(accountController.buildRegisterView))
 
@@ -22,7 +27,7 @@ router.post(
     '/login',
     logValidate.loginRules(), 
     logValidate.checkLoginData,
-    utilities.handleErrors(accountController.checkLogin)
+    utilities.handleErrors(accountController.accountLogin)
 )
 
 

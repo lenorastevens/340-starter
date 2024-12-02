@@ -367,6 +367,10 @@ select {
   color: #882a2a;
 }
 
+/***** Account Management *****/
+#acct-management {
+  text-align: center;
+}
 
 /***** Footer  *****/
 footer {

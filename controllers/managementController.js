@@ -4,11 +4,14 @@ const invModel = require("../models/inventory-model")
 async function buildInvManagement(req, res, next) {
     try {
       let nav = await utilities.getNav()
+
+      const classificationSelect = await utilities.buildClassificationList()
   
       res.render("./inventory/management", {
         title: "Inventory Management",
         nav,
-        errors: null
+        errors: null,
+        classificationSelect
       })
     } catch (error) {
       console.error("Error building management view:", error);
