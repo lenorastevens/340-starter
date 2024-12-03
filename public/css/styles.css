@@ -360,17 +360,41 @@ select {
   margin-bottom: 3%;
 }
 .add-new a {
-  color: black;
+  color: #882a2a;
+  text-decoration: none;
 }
 
 .add-new a:hover {
-  color: #882a2a;
+  color: black;
+}
+
+table, th, td {
+  margin: auto;
+  border: 3px ridge black;
+  background-color: #882a2a;
+  color: white;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+td a {
+  color: white;
+}
+
+th[scope='col'], td[scope='col'] {
+  padding: 5px;
+}
+
+
+#classificationList {
+  width: 80%;
 }
 
 /***** Account Management *****/
 #acct-management {
   text-align: center;
 }
+
 
 /***** Footer  *****/
 footer {
@@ -429,6 +453,13 @@ footer {
     width: 70%;
   }
 
+  th[scope='col'], td[scope='col'] {
+    padding: 8px;
+  }
+
+  #classificationList {
+    width: 60%;
+  }
   #wrapper {
     margin: 1% 7% 1% 7%;
   }

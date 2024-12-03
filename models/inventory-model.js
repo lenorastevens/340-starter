@@ -105,10 +105,60 @@ async function insertVehicle(
   }
 }
 
+/* *************************************
+ *  UPDATE a vehicle in inventory
+ * ********************************** */
+async function updateVehicle(
+  inv_id,
+  inv_make,
+  inv_model,
+  inv_year,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_miles,
+  inv_color,
+  classification_id
+) { 
+  try{
+
+    const sql = "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_year = $3, inv_description = $4, inv_image = $5, inv_thumbnail = $6, inv_price = $7, inv_miles = $8, inv_color = $9, classification_id = $10 WHERE inv_id = $11 RETURNING *"
+
+    const result = await pool.query(sql, [
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
+      inv_id
+    ])
+
+    if (result.rowCount > 0) {
+      const vehicle = result.rows[0]
+      console.log("Vehicle Returned from Insert:" +vehicle)
+      return vehicle      
+    } else {
+      console.log('Could not find vehicle.')
+    }
+
+  } catch (error) {
+    console.error('Error updating vehicle:', error.message)
+    return error.message
+  }
+}
+
+
 module.exports = {
   getClassifications, 
   getInventoryByClassificationId, 
   getDetailsByInventoryId,
   insertClassification,
-  insertVehicle
+  insertVehicle,
+  updateVehicle
 }

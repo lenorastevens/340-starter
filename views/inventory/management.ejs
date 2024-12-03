@@ -12,3 +12,18 @@
         <li class="add-new"><a href="/inv/addInventory" title="Add New Vehicle">Add New Vehicle</a></li>
     </ul>
 </div>
+<div class="management-links">
+    <h3>Manage Inventory</h3>
+    <p>Select a classification from the list to see items belonging to that classification.</p>
+    <select name="classification_id" id="classificationList" required>
+        <option value="">Choose a Classification</option>
+        <% classificationList.forEach(classification => { %>
+        <option value="<%= classification.classification_id %>">
+            <%= classification.classification_name %>
+        </option>
+        <% }) %> 
+    </select>
+    <table id="inventoryDisplay"></table>
+    <noscript>JavaScript must be enabled to use this page.</noscript>
+</div>
+<script src="../../js/inventory.js"></script>
