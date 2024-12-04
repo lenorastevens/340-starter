@@ -8,6 +8,15 @@ const invCont = {}
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId
+  
+  if (isNaN(classification_id) || classification_id <= 0) {
+    console.error("Invalid classification ID:", req.params.classificationId)
+    const error = new Error("Invalid classification ID. Must be a positive number.")
+    error.status = 400
+    next(error)
+    return
+  }
+
   try {
     const data = await invModel.getInventoryByClassificationId(classification_id)
   

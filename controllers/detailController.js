@@ -9,7 +9,15 @@ const detCont = {}
 
 detCont.buildByInventoryId = async function (req, res, next) {
     const inv_id = req.params.inventoryId
-    console.log(req.params)
+
+    if (isNaN(inv_id) || inv_id <= 0) {
+      console.error("Invalid inventory ID:", req.params.inventoryId);
+      const error = new Error("Invalid inventory ID. Must be a positive number.");
+      error.status = 400; // Bad Request
+      next(error);
+      return;
+    }
+
     try {
       const data = await invModel.getDetailsByInventoryId(inv_id)
 
