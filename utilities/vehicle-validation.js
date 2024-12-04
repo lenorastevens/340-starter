@@ -42,14 +42,14 @@ validate.vehicleRules = () => {
     // Image path is required and must be a file
     body("inv_image")
     .trim()
-    .escape()
+    // .escape()
     .notEmpty()
     .withMessage("Please provide a path to a vehicle image."),
 
     // Image thumbnail path is required and must be a file
     body("inv_thumbnail")
     .trim()
-    .escape()
+    // .escape()
     .notEmpty()
     .withMessage("Please provide a path to a vehicle image thumbnail."),
 

@@ -385,9 +385,12 @@ th[scope='col'], td[scope='col'] {
   padding: 5px;
 }
 
-
 #classificationList {
   width: 80%;
+}
+
+#confirm-delete {
+  text-align: center;
 }
 
 /***** Account Management *****/

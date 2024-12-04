@@ -1,5 +1,6 @@
 const utilities = require("../utilities/")
 const invModel = require("../models/inventory-model")
+const Util = require("../utilities/")
 
 // Build Inventory Management View
 async function buildInvManagement(req, res, next) {
@@ -57,7 +58,8 @@ async function addNewInventory(req, res, next) {
 // Build Edit Vehicle View
 async function editVehicleView(req, res, next) {
   try {    
-    const inv_id = parseInt(req.params.inventory_id)
+    console.log('req.params:', req.params)
+    const inv_id = parseInt(req.params.inv_id)
 
     let nav = await utilities.getNav()
 
@@ -88,6 +90,35 @@ async function editVehicleView(req, res, next) {
     res.status(500).send("An error occurred while loading the edit inventory page.");
   }
 }
+
+// Build Delete Vehicle View
+async function deleteVehicleView(req, res, next) {
+  try {    
+    const inv_id = parseInt(req.params.inv_id)
+    console.log(inv_id)
+
+    let nav = await utilities.getNav()
+
+    const itemData = await invModel.getDetailsByInventoryId(inv_id)
+
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+    
+    res.render("./inventory/deleteConfirm", {
+      title: "Delete " + itemName,
+      nav,
+      errors: null,
+      inv_id: itemData.inv_id,
+      inv_make: itemData.inv_make,
+      inv_model: itemData.inv_model,
+      inv_year: itemData.inv_year,
+      inv_price: itemData.inv_price,
+    })
+  } catch (error) {
+    console.error("Error building delete vehicle view:", error);
+    res.status(500).send("An error occurred while loading the edit inventory page.");
+  }
+}
+
 
 /* *********************************
 *  Process CRUD Inventory Operations
@@ -130,9 +161,6 @@ async function insertNewVehicle(req, res, next) {
 
   const { inv_make, inv_model,inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body 
 
-  // const imagePath = `/images/vehicles/${inv_image}`
-  // const thumbnailPath = `/images/vehicles/${inv_thumbnail}`
-  console.log(inv_image)
   const vehicleResult = await invModel.insertVehicle(
     inv_make,
     inv_model,
@@ -174,9 +202,6 @@ async function updateInventory(req, res, next) {
   let nav = await utilities.getNav()
 
   const { inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body 
-
-  // const imagePath = `/images/vehicles/${inv_image}`
-  // const thumbnailPath = `/images/vehicles/${inv_thumbnail}`
 
   const vehicleResult = await invModel.updateVehicle(
     inv_id,
@@ -223,7 +248,35 @@ async function updateInventory(req, res, next) {
   }  
 }
 
+// DELETE a Vehicle from Inventory
+async function deleteVehicle(req, res, next) {
+  let nav = await utilities.getNav()
 
+  const { inv_id, inv_make, inv_model, inv_year, inv_price } = req.body 
+  const itemName = `${inv_make} ${inv_model}`
+
+  const vehicleResult = await invModel.deleteVehicle(inv_id)
+
+  if (vehicleResult) {
+    req.flash(
+      "notice",
+      `Congratulations! The ${itemName} was successfully deleted.`
+    )
+    res.redirect("/inv/")
+  } else {
+    req.flash("notice", "Sorry, deleting the vehicle failed.")
+    res.status(501).render("./inventory/deleteConfirm", {
+      title: "Edit " + itemName,
+      nav,
+      errors: null,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price
+    })  
+  }  
+}
 
 /* ***************************
  *  Return Inventory by Classification As JSON
@@ -249,5 +302,7 @@ module.exports = {
   insertNewVehicle,
   getInventoryJSON,
   editVehicleView,
-  updateInventory
+  updateInventory,
+  deleteVehicleView,
+  deleteVehicle
 }

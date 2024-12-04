@@ -17,7 +17,9 @@ router.get("/addInventory", utilities.handleErrors(managementController.addNewIn
 // Load Inventory Table by Classification
 router.get("/getInventory/:classification_id", utilities.handleErrors(managementController.getInventoryJSON))
 // Get Form to Edit Vehicle
-router.get("/edit/:inventory_id", utilities.handleErrors(managementController.editVehicleView))
+router.get("/edit/:inv_id", utilities.handleErrors(managementController.editVehicleView))
+// Load Delete Inventory Form
+router.get("/delete/:inv_id", utilities.handleErrors(managementController.deleteVehicleView))
 
 // Classification View Route
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId))
@@ -41,5 +43,10 @@ router.post(
     vehicleValidate.vehicleRules(),
     vehicleValidate.checkUpdateData,
     utilities.handleErrors(managementController.updateInventory))
+
+router.post(
+    '/delete/',
+    utilities.handleErrors(managementController.deleteVehicle)
+)
 
 module.exports = router;
