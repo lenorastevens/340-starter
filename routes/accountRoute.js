@@ -13,6 +13,8 @@ router.get(
 )
 router.get("/login", utilities.handleErrors(accountController.buildLoginView))
 router.get("/register", utilities.handleErrors(accountController.buildRegisterView))
+router.get("/edit/:account_id", utilities.handleErrors(accountController.buildEditView))
+router.get("/logout", utilities.handleErrors(accountController.accountLogout) )
 
 // Process Registration Post method
 router.post(
@@ -30,5 +32,20 @@ router.post(
     utilities.handleErrors(accountController.accountLogin)
 )
 
+// Process to edit account information
+router.post(
+    '/edit/',
+    regValidate.editDataRules(),
+    regValidate.checkEditData,
+    utilities.handleErrors(accountController.editAccountDetails)
+)
+
+// Process to change account password
+router.post (
+    '/edit/pw/',
+    logValidate.passwordRules(),
+    logValidate.checkPWData,
+    utilities.handleErrors(accountController.editPassword)
+)
 
 module.exports = router;

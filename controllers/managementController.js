@@ -58,7 +58,6 @@ async function addNewInventory(req, res, next) {
 // Build Edit Vehicle View
 async function editVehicleView(req, res, next) {
   try {    
-    console.log('req.params:', req.params)
     const inv_id = parseInt(req.params.inv_id)
 
     let nav = await utilities.getNav()

@@ -328,6 +328,9 @@ select {
 .form-msg {
   margin-bottom: 3%;
 }
+.form-title {
+  text-align: center;
+}
 #submit-btn {
   display: block;
   width: 100%;

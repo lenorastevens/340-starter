@@ -123,7 +123,9 @@ async function updateVehicle(
 ) { 
   try{
 
-    const sql = "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_year = $3, inv_description = $4, inv_image = $5, inv_thumbnail = $6, inv_price = $7, inv_miles = $8, inv_color = $9, classification_id = $10 WHERE inv_id = $11 RETURNING *"
+    const sql = `UPDATE public.inventory 
+      SET inv_make = $1, inv_model = $2, inv_year = $3, inv_description = $4, inv_image = $5, inv_thumbnail = $6, inv_price = $7, inv_miles = $8, inv_color = $9, classification_id = $10 
+      WHERE inv_id = $11 RETURNING *`
 
     const result = await pool.query(sql, [
       inv_make,
@@ -141,7 +143,7 @@ async function updateVehicle(
 
     if (result.rowCount > 0) {
       const vehicle = result.rows[0]
-      console.log("Vehicle Returned from Insert:" +vehicle)
+      console.log("Vehicle Returned from Insert:" + vehicle)
       return vehicle      
     } else {
       console.log('Could not find vehicle.')
@@ -171,7 +173,7 @@ async function deleteVehicle(
     return result
 
   } catch (error) {
-    console.error('Error updating vehicle:', error.message)
+    console.error('Error deleting vehicle:', error.message)
     return error.message
   }
 }

@@ -45,4 +45,87 @@ async function getAccountByEmail(account_email) {
   }
 }
 
-  module.exports = { registerAccount, checkExistingEmail, getAccountByEmail }
+/* *************************
+*  Get Account Data by ID
+* *********************** */
+async function getAccountByAccountId(account_id) {
+  try {
+    const data = await pool.query(
+      `SELECT * FROM public.account WHERE account_id = $1`,
+      [account_id]
+    )
+    if (data.rows.length === 0) {
+      return null
+    }
+    return data.rows[0]
+  } catch (error) {
+    console.error("Get account by id error: " + error)
+    throw error
+  }
+}
+
+/* **********************
+*  Edit Account Data 
+* ******************** */
+async function editAccount(
+  account_id,
+  account_firstname,
+  account_lastname,
+  account_email,
+) {
+  console.log(account_id)
+  try {
+    const sql = `UPDATE public.account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *`
+    const result = await pool.query(sql, [
+      account_firstname, 
+      account_lastname,
+      account_email,
+      account_id
+    ])
+  
+    if (result.rowCount > 0) {
+      const account = result.rows[0]
+      return account
+    } else {
+      console.log('Could not find account.')
+    }
+
+  } catch (error) {
+    console.error('Error updating account:', error.message)
+    return error.message
+  }
+  
+}
+
+/* **********************
+*  Edit Account Password 
+* ******************** */
+async function editPassword(
+  account_id,
+  account_password
+) {
+  
+  try {
+    const sql = `UPDATE public.account SET account_password = $1 WHERE account_id = $2 RETURNING account_id, account_firstname, account_lastname`
+    const result = await pool.query(sql, [account_password, account_id])
+
+    const account = result.rows[0]
+    console.log(account)
+    
+    return account
+    
+  } catch (error) {
+    console.error("Error updating password", error.message)
+    return error.message
+  }
+
+}
+
+  module.exports = { 
+    registerAccount, 
+    checkExistingEmail, 
+    getAccountByEmail, 
+    getAccountByAccountId, 
+    editAccount,
+    editPassword 
+  }

@@ -16,8 +16,10 @@
 
 <div id="acct-management">
     <h2 id="acct-title">Welcome <%= locals.accountData.account_firstname %> <%= locals.accountData.account_lastname %>!</h2>
-    <ul>
-        <li><a>Edit Account Information</a></li>
-    </ul>
+    <h3><a href="/account/edit/<%= locals.accountData.account_id %>">Update Account</a></h3>
+    <% if (['Employee', 'Admin'].includes(locals.accountData.account_type)) { %>
+        <h3><a href="/inv">Inventory Management</a></h3>
+    <% } %>
+    
     
 </div>

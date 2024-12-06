@@ -48,6 +48,11 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 app.use(utilities.checkJWTToken)
+app.use((req, res, next) => {
+  // Check if the user is authenticated based on the JWT
+  res.locals.loggedin = !!req.cookies.jwt;  // Ensure loggedin is set here
+  next();
+});
 
 /* ***********************
  * View Engine and Templates
@@ -95,17 +100,6 @@ app.use(async (err, req, res, next) => {
     nav,
     message: err.message
   })
-  // let message;
-  // if(err.status === 404){ 
-  //   message = err.message;
-  // } else {
-  //   message = err.message || 'Oh no! There was a crash. Maybe try a different route?';
-  // }
-  // res.status(err.status || 500).render("errors/error", {
-  //   title: err.status || 'Server Error',
-  //   message,
-  //   nav
-  // });
 })
 
 /* ***********************
