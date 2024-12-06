@@ -19,6 +19,7 @@
     <form id="updateForm" class="form-container" action="/account/edit"  method="post">
         <span class="form-msg">All fields are required.</span>
         <fieldset>
+            <legend>Accout Data</legend>
             <label class="login">First Name:
             <input type="text" name="account_firstname" id="accountFirstname" required value="<%= locals.account_firstname %>">
             </label>
@@ -40,6 +41,7 @@
     <h2 id="editPW" class="form-title">Update Password</h2>
     <form id="updateForm" class="form-container" action="/account/edit/pw"  method="post">
         <fieldset name="Password">
+            <legend>Password Reset</legend>
             <p class="form-msg">Passwords must be at least 12 characters, one must be a number, one must be a lowercase letter, one must be a capital letter, and one must be a non-alphanumeric character.</p>
             <p class="form-msg">*note your original password will be changed. </p>
 

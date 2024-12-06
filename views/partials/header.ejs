@@ -5,9 +5,10 @@
     </div>
     <div id="tools">
         <% if (loggedin) { %>  <!-- Check if loggedin is truthy -->
-            <button><a href="/account/logout">Logout</a></button>
+            <button class="act-btn"><a class="act-link" href="/account">My Account</a></button>
+            <button class="act-btn"><a class="act-link" href="/account/logout">Logout</a></button>
           <% } else { %>  <!-- Otherwise show 'My Account' -->
-            <button><a href="/account/login">Login</a></button>
+            <button class="act-btn"><a class="act-link" href="/account/login">Login</a></button>
           <% } %>
     </div>
 </header>

@@ -8,8 +8,7 @@
 /***** Body *****/
 body {
   background-image: url("../images/site/small_check.jpg");
-  background-repeat: repeat-x;
-  background-repeat: repeat-y;
+  background-repeat: repeat;
   font-size: 13px;
   font-family: "Antic Didone", serif;
   font-style: normal;
@@ -68,6 +67,8 @@ header {
 }
 #top-header a {
   text-decoration: none;
+}
+#logo-name {
   color: #882a2a;
 }
 
@@ -400,7 +401,22 @@ th[scope='col'], td[scope='col'] {
 #acct-management {
   text-align: center;
 }
-
+.data-manage {
+  color: #882a2a;
+}
+.act-btn {
+  justify-self:right;
+  align-items: center;
+  background-color: black;
+  border: 3px ridge #882a2a;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px 0 rgb(66, 50, 50);
+  padding: 5%;
+  margin: 1%;
+}
+a.act-link {
+  color: white;
+}
 
 /***** Footer  *****/
 footer {

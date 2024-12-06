@@ -38,8 +38,8 @@ Util.buildClassificationGrid = async function(data){
         grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
         + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
         + 'details"><img src="' + vehicle.inv_thumbnail 
-        +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
-        +' on CSE Motors" ></a>'
+        +'" alt="Picture of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
+        +'"></a>'
         grid += '<div class="namePrice">'
         grid += '<hr >'
         grid += '<h2>'
@@ -71,14 +71,14 @@ Util.buildVehicleDetailsGrid = async function (details) {
       grid = `
         <div id="vehicle-container">
           <div>
-            <img class="vehicle-img" src=" ${details.inv_image}" alt="Image of ${details.inv_make} ${details.inv_model} on CSE Motors" >        
+            <img class="vehicle-img" src=" ${details.inv_image}" alt="Picture of ${details.inv_make} ${details.inv_model}" >        
           </div>
           <div>
-            <h3 id="detail-title">${details.inv_make} ${details.inv_model} Details</h3>
-            <h4 class="detail-labels"><span class="first-word">Price: </span><span>$${new Intl.NumberFormat('en-US').format(details.inv_price)}</span></h4>
-            <h4 class="detail-labels"><span class="first-word">Description: </span><span>${details.inv_description}</span></h4>
-            <h4 class="detail-labels"><span class="first-word">Color: </span><span>${details.inv_color}</span></h4>
-            <h4 class="detail-labels"><span class="first-word">Miles: </span><span>${new Intl.NumberFormat('en-US').format(details.inv_miles)}</span></h4>
+            <h2 id="detail-title">${details.inv_make} ${details.inv_model} Details</h2>
+            <h3 class="detail-labels"><span class="first-word">Price: </span><span>$${new Intl.NumberFormat('en-US').format(details.inv_price)}</span></h3
+            <h3 class="detail-labels"><span class="first-word">Description: </span><span>${details.inv_description}</span></h3>
+            <h3 class="detail-labels"><span class="first-word">Color: </span><span>${details.inv_color}</span></h3>
+            <h3 class="detail-labels"><span class="first-word">Miles: </span><span>${new Intl.NumberFormat('en-US').format(details.inv_miles)}</span></h3>
           </div>
         </div>
         `;
