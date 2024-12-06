@@ -4,11 +4,11 @@
         <a id="logo-name" href="/" title="Return to home page">CSE Motors</a>
     </div>
     <div id="tools">
-        <% if (loggedin) { %>  <!-- Check if loggedin is truthy -->
-            <button class="act-btn" href="/account">My Account</button>
-            <button class="act-btn" href="/account/logout">Logout</button>
-          <% } else { %>  <!-- Otherwise show 'My Account' -->
-            <button class="act-btn" href="/account/login">Login</button>
+        <% if (loggedin) { %> 
+            <a class="act-btn" href="/account">My Account</a>
+            <a class="act-btn" href="/account/logout">Logout</a>
+          <% } else { %>  
+            <a class="act-btn" href="/account/login">Login</button>
           <% } %>
     </div>
 </header>
