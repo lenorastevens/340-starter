@@ -190,6 +190,16 @@ async function editAccountDetails(req, res, next) {
   )
 
   if (editResult) {
+    delete editResult.account_password
+    console.log(editResult)
+    const accessToken = jwt.sign(editResult, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+
+    if(process.env.NODE_ENV === 'development') {
+      res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+    } else {
+      res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+    }
+
     req.flash(
       "notice",
       `Congratulations, ${editResult.account_firstname} ${editResult.account_lastname}. Your account has been updated.`

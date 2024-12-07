@@ -49,8 +49,7 @@ app.use(cookieParser())
 
 app.use(utilities.checkJWTToken)
 app.use((req, res, next) => {
-  // Check if the user is authenticated based on the JWT
-  res.locals.loggedin = !!req.cookies.jwt;  // Ensure loggedin is set here
+  res.locals.loggedin = !!req.cookies.jwt; 
   next();
 });
 
