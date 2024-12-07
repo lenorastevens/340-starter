@@ -113,18 +113,20 @@ validate.editDataRules = () => {
 * Check data and return errors or continue to registration
 * ***************************** */
 validate.checkEditData = async (req, res, next) => {
-  const { account_firstname, account_lastname, account_email } = req.body
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
-    res.render("account/edit", {
+    console.log(errors)
+    res.render(`account/editAccount`, {
       errors,
       title: "Edit Account",
       nav,
       account_firstname,
       account_lastname,
       account_email,
+      account_id
     })
     return
   }

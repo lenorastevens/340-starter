@@ -70,7 +70,7 @@ validate.passwordRules = () => {
 }
 
 /* ******************************
-* Check data and return errors or continue to registration
+* Check data and return errors or continue to account management
 * ***************************** */
 validate.checkPWData = async (req, res, next) => {
   const { account_id } = req.body
@@ -78,11 +78,15 @@ validate.checkPWData = async (req, res, next) => {
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
-    res.render("account/management", {
-      title: "Account Management",
+    const { account_firstname, account_lastname, account_email } = res.locals.accountData
+    res.render("account/editAccount", {
+      title: "Edit Account",
       nav,
       errors,
       account_id,
+      account_firstname,
+      account_lastname,
+      account_email
     })
   return
   }
