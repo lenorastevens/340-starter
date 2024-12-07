@@ -73,7 +73,6 @@ async function editAccount(
   account_lastname,
   account_email,
 ) {
-  console.log(account_id)
   try {
     const sql = `UPDATE public.account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *`
     const result = await pool.query(sql, [

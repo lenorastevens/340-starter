@@ -15,8 +15,8 @@
 <% } %>
 
 <div>
-    <h2 id="editForm" class="form-title">Update Personal Information</h2>
-    <form id="updateForm" class="form-container" action="/account/edit"  method="post">
+    <h2 class="form-title">Update Personal Information</h2>
+    <form id="editForm" class="form-container" action="/account/edit"  method="post">
         <span class="form-msg">All fields are required.</span>
         <fieldset>
             <legend>Accout Data</legend>
@@ -32,14 +32,14 @@
             <input type="email" name="account_email" id="accountEmail" placeholder="Enter a valid email address" required value="<%= locals.account_email %>">
             </label>
 
-            <button class="register" id="submit-btn" type="submit">Update</button>
+            <button class="register" id="submit-btn" type="submit" disabled>Update</button>
             <input type="hidden" name="account_id" <% if(locals.account_id) { %> value="<%= locals.account_id %>"<% } %>>
         </fieldset>
     </form>
 </div>
 <div>
-    <h2 id="editPW" class="form-title">Update Password</h2>
-    <form id="updateForm" class="form-container" action="/account/edit/pw"  method="post">
+    <h2 class="form-title">Update Password</h2>
+    <form id="editPW" class="form-container" action="/account/edit/pw"  method="post">
         <fieldset name="Password">
             <legend>Password Reset</legend>
             <p class="form-msg">Passwords must be at least 12 characters, one must be a number, one must be a lowercase letter, one must be a capital letter, and one must be a non-alphanumeric character.</p>
@@ -50,7 +50,7 @@
             </label>
             <span class="form-msg">* Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character.</span>
 
-            <button class="register" id="submit-btn" type="submit">Change Password</button>
+            <button class="register" id="submit-btn" type="submit" disabled>Change Password</button>
             <input type="hidden" name="account_id" <% if(locals.account_id) { %> value="<%= locals.account_id %>"<% } %>>
         </fieldset>
     </form>

@@ -181,7 +181,8 @@ async function editAccountDetails(req, res, next) {
 
   const { account_id, account_firstname, account_lastname, account_email, } = req.body
 
-  const editResult = await accountModel.editAccount(
+  const editResult = await accountModel.editAccount
+  (
     account_id,
     account_firstname,
     account_lastname,
@@ -193,7 +194,13 @@ async function editAccountDetails(req, res, next) {
       "notice",
       `Congratulations, ${editResult.account_firstname} ${editResult.account_lastname}. Your account has been updated.`
     )
-    return res.redirect("/account/")
+    // return res.redirect("/account/")
+    res.render('account/management', {
+      title: 'Account Management',
+      nav,
+      errors: null,
+      editResult
+    })
     
   } else {
     req.flash("notice", "Sorry, the update failed.")
