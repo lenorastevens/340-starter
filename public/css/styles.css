@@ -409,6 +409,10 @@ th[scope='col'], td[scope='col'] {
 }
 .data-manage {
   color: #882a2a;
+  text-decoration: none;
+}
+.data-manage:hover{
+  font-size: 1.1em;
 }
 
 /***** Footer  *****/
