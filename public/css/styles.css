@@ -415,6 +415,29 @@ th[scope='col'], td[scope='col'] {
   font-size: 1.1em;
 }
 
+/***** Review Box Vehicle View *****/
+.review-card {
+  padding-bottom: 3%;
+}
+
+.review-card::first-line {
+  text-decoration: 2px underline #882a2a;
+}
+
+/***** Review Box Account View *****/
+#act-review-list {
+  display: block;
+  margin: auto;
+  padding-inline-start: 0;
+  width: 92%;
+  color: #882a2a;
+}
+
+.change-list {
+  text-decoration: none;
+  color: #882a2a;
+}
+
 /***** Footer  *****/
 footer {
   padding-top: 5%;
@@ -482,7 +505,7 @@ footer {
   #wrapper {
     margin: 1% 7% 1% 7%;
   }
-  /* .act-btn {
-    padding: 1%;
-  } */
+  #act-review-list {
+    padding-left: 1%;
+  }
 }

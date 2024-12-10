@@ -4,7 +4,7 @@ const utilities = require("../utilities/")
 const detCont = {}
 
 /* ***************************
- *  Build vehicle by details view view
+ *  Build vehicle by details view
  * ************************** */
 
 detCont.buildByInventoryId = async function (req, res, next) {
@@ -35,6 +35,7 @@ detCont.buildByInventoryId = async function (req, res, next) {
     res.render("./inventory/detail", {
       title: className,
       nav,
+      errors: null,
       grid,
       reviewList,
       reviewData,

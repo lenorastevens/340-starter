@@ -108,8 +108,6 @@ async function buildReviewEditView(req, res, next) {
 
     const title = `Edit ${vehicleData.inv_year} ${vehicleData.inv_make} ${vehicleData.inv_model} Review`
 
-    console.log("Vehicle Data", vehicleData)
-
     res.render("account/editReview", {
       title,
       nav,

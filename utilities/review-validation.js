@@ -3,6 +3,7 @@ const { body, validationResult } = require("express-validator")
 const validate = {}
 const invModel= require("../models/inventory-model")
 const accountModel = require('../models/account-model')
+const detCont = require("../controllers/detailController")
 
 /* **********************************
 *  Review Data Validation Rules
@@ -20,28 +21,31 @@ validate.reviewRules = () => {
 
 validate.checkReviewData = async (req, res, next) => {
     const { review_text, account_id, inv_id } = req.body 
-    
     let errors = []
 
     errors = validationResult(req)
 
-    if (!errors.isEmpty()) {
-        try {
-            let nav = await utilities.getNav()
-            
-            let reveiws = await accountModel.getReviewsByActId(account_id)
-            let actReviewList = await utilities.buildActReviewList(reveiws)
+    if (!errors.isEmpty()) {        
+        let nav = await utilities.getNav()
+        
+        const vehicleData = await invModel.getDetailsByInventoryId(inv_id)
+        const reviewData = await invModel.getReviewsByInvId(inv_id)
 
-            res.render("account/management", {
-                title: "Account Management",
-                nav,
-                errors: null,
-                actReviewList
-            })
-        } catch (err) {
-            console.error("Error fetching necessary data for rendering:", err)
-            return next(err)
-        }
+        const grid = await utilities.buildVehicleDetailsGrid(vehicleData)
+        const reviewList = await utilities.buildReviewList(reviewData)
+
+        const className = `${vehicleData.inv_year} ${vehicleData.inv_make} ${vehicleData.inv_model}`
+
+        // return res.redirect(`/inv/detail/${inv_id}`)        
+        return res.render("./inventory/detail", {
+            errors,
+            title: className,
+            nav,  
+            grid,
+            reviewList,
+            vehicleData,
+            reviewData,
+        })
     }
     next()
 }
@@ -57,15 +61,16 @@ validate.checkReviewEdit = async (req, res, next) => {
         try {
             const nav = await utilities.getNav();
             const vehicleData = await invModel.getDetailsByInventoryId(inv_id)
-            const reviews = await accountModel.getReviewsByActId(account_id)
+            const reviewData = await accountModel.getReviewByReviewId(review_id)
+
+            const className = `Edit ${vehicleData.inv_year} ${vehicleData.inv_make} ${vehicleData.inv_model} Review`
             const accountData= res.locals.accountData
 
-            return res.render("account/management", {
-                title: 
+            return res.render("account/editReview", {
+                title: className, 
                 nav,
-                errors: errors.array(),
-                accountData,
-                reviews,
+                errors,
+                reviewData,
                 vehicleData
             })
 

@@ -118,7 +118,7 @@ Util.buildReviewList  = async function (reviewData) {
       }).format(new Date(review.review_date))
 
       reviewList += `<li class="review-card">${review.account_first_initial}${review.account_lastname}`
-      + `wrote on ${formattedDate}<br>${review.review_text}</li>`  
+      + ` wrote on ${formattedDate}<br>${review.review_text}</li>`  
     })
     reviewList += '</ul>'    
   } else {
@@ -132,7 +132,7 @@ Util.buildActReviewList = async function (reviews) {
   let reviewList = '';
 
   if (reviews.length > 0) {
-    reviewList = '<ul id="act-review-list">'
+    reviewList = '<ol id="act-review-list">'
     reviews.forEach(review => {
       const formattedDate = new Intl.DateTimeFormat('en-US', {
         year: 'numeric',
@@ -141,9 +141,9 @@ Util.buildActReviewList = async function (reviews) {
       }).format(new Date(review.review_date))
 
       reviewList += `<li class="act-review-card" data-review-id="${review.review_id}">Reviewed the ${review.inv_year} ${review.inv_make} ${review.inv_model} on ${formattedDate} `
-      + `| <a href="/account/review/edit/${review.review_id}">Edit</a> | <a href="/account/review/delete/${review.review_id}">Delete</a></li>`
+      + `| <a class="change-list" href="/account/review/edit/${review.review_id}">Edit &rarr;</a> | <a class="change-list" href="/account/review/delete/${review.review_id}">Delete &rarr;</a></li>`
     })
-    reviewList += '</ul>'
+    reviewList += '</ol>'
   } else {
     reviewList = '<p>No reviews recorded yet.</p>'
   }

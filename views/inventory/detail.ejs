@@ -6,6 +6,14 @@
 
 <%- messages() %>
 
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
 <%- grid %>
 
 <div>
@@ -30,7 +38,7 @@
                     <input type="text" name="screen_name" id="screenName" required readonly value="<%= locals.accountData.account_firstname.charAt(0) %><%= locals.accountData.account_lastname %>">
                 </label>
                 <label class="review">Review: 
-                    <textarea name="review_text" id="reviewText" rows="3" maxlength="350" required <%= reviewData ? 'value="' + reviewData.review_text + '"' : '' %>></textarea>
+                    <textarea name="review_text" id="reviewText" rows="3" minlength="3" maxlength="350" required <%= reviewData ? 'value="' + reviewData.review_text + '"' : '' %>></textarea>
                 </label>
                 <input type="hidden" name="review_date" value="<%= new Date().toISOString() %>">
                 <button class="review" id="submit-btn" type="submit">Submit Review</button>
