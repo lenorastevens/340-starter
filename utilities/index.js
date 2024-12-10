@@ -105,6 +105,51 @@ Util.buildClassificationList = async function () {
   return data.rows
 }
 
+Util.buildReviewList  = async function (reviewData) {
+  let reviewList = '';
+  
+  if (reviewData.length > 0) {
+    reviewList = '<ul id="review-list">'
+    reviewData.forEach(review =>{
+      const formattedDate = new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: '2-digit'
+      }).format(new Date(review.review_date))
+
+      reviewList += `<li class="review-card">${review.account_first_initial}${review.account_lastname}`
+      + `wrote on ${formattedDate}<br>${review.review_text}</li>`  
+    })
+    reviewList += '</ul>'    
+  } else {
+    reviewList = '<p>Be the first to write a review.</p>'
+  }  
+  return reviewList
+}
+
+
+Util.buildActReviewList = async function (reviews) {
+  let reviewList = '';
+
+  if (reviews.length > 0) {
+    reviewList = '<ul id="act-review-list">'
+    reviews.forEach(review => {
+      const formattedDate = new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: '2-digit'
+      }).format(new Date(review.review_date))
+
+      reviewList += `<li class="act-review-card" data-review-id="${review.review_id}">Reviewed the ${review.inv_year} ${review.inv_make} ${review.inv_model} on ${formattedDate} `
+      + `| <a href="/account/review/edit/${review.review_id}">Edit</a> | <a href="/account/review/delete/${review.review_id}">Delete</a></li>`
+    })
+    reviewList += '</ul>'
+  } else {
+    reviewList = '<p>No reviews recorded yet.</p>'
+  }
+  return reviewList
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

@@ -97,6 +97,22 @@ async function editAccount(
 }
 
 /* **********************
+*  Edit Review 
+* ******************** */
+async function editReview(review_text, review_id) {
+  try {
+    const sql = 'UPDATE public.review SET review_text = $1 WHERE review_id = $2 RETURNING *'
+    const result = await pool.query(sql, [review_text, review_id])
+    return result.rows[0]
+  } catch (error) {
+    console.error("Error updating review", error.message)
+    return error.message
+  }
+  
+} 
+
+
+/* **********************
 *  Edit Account Password 
 * ******************** */
 async function editPassword(
@@ -109,7 +125,6 @@ async function editPassword(
     const result = await pool.query(sql, [account_password, account_id])
 
     const account = result.rows[0]
-    console.log(account)
     
     return account
     
@@ -120,11 +135,67 @@ async function editPassword(
 
 }
 
+/* **********************
+*  Delete Review
+* ******************** */
+async function deleteReview(review_id) {
+  try {
+    const result = await pool.query(`DELETE FROM public.review WHERE review_id = $1`, [review_id])
+    return result
+  } catch (error) {
+    console.error("Error deleting review", error.message)
+    return error.message
+  }
+}
+
+async function getReviewsByActId(account_id) {
+  try {
+    const sql = `
+    SELECT
+    r.review_id,
+    r.review_date,
+    r.review_text,
+    r.inv_id,
+    r.account_id,
+    i.inv_make,
+    i.inv_model,
+    i.inv_year
+    FROM review r
+    JOIN inventory i
+    ON r.inv_id = i.inv_id
+    WHERE account_id = $1
+    ORDER BY r.review_date DESC;`
+    const result = await pool.query(sql, [account_id])
+
+    const reviews = result.rows
+
+    return reviews
+
+  } catch (error) {
+    console.error("Error getting reviews", error.message)
+    return error.message
+  }
+}
+
+async function getReviewByReviewId(review_id) {
+  try {
+    const review = await pool.query(`SELECT * FROM review WHERE review_id = $1;`, [review_id])
+    return review.rows[0]
+  } catch (error) {
+    console.error("Error getting review", error.message)
+    return error.message
+  }
+}
+
   module.exports = { 
     registerAccount, 
     checkExistingEmail, 
     getAccountByEmail, 
     getAccountByAccountId, 
     editAccount,
-    editPassword 
+    editPassword,
+    editReview,
+    deleteReview,
+    getReviewsByActId,
+    getReviewByReviewId
   }

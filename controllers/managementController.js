@@ -94,7 +94,6 @@ async function editVehicleView(req, res, next) {
 async function deleteVehicleView(req, res, next) {
   try {    
     const inv_id = parseInt(req.params.inv_id)
-    console.log(inv_id)
 
     let nav = await utilities.getNav()
 
@@ -114,7 +113,7 @@ async function deleteVehicleView(req, res, next) {
     })
   } catch (error) {
     console.error("Error building delete vehicle view:", error);
-    res.status(500).send("An error occurred while loading the edit inventory page.");
+    res.status(500).send("An error occurred while loading the delete inventory page.");
   }
 }
 
@@ -178,7 +177,6 @@ async function insertNewVehicle(req, res, next) {
         "notice",
         `Congratulations! You have added the ${vehicleResult.inv_make} ${vehicleResult.inv_model} to the inventory.`
     )
-    console.log(vehicleResult)
     const classificationList = await utilities.buildClassificationList()
 
     res.status(201).render("./inventory/management", {
@@ -282,7 +280,6 @@ async function deleteVehicle(req, res, next) {
  * ************************** */
 async function getInventoryJSON(req, res, next) {
   const classification_id = parseInt(req.params.classification_id)
-  console.log(classification_id)
   const invData = await invModel.getInventoryByClassificationId(classification_id)
   if (invData[0].inv_id) {
     return res.json(invData)

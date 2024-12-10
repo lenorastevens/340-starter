@@ -48,6 +48,43 @@ async function getDetailsByInventoryId(inv_id) {
   }
 }
 
+/* ***************************
+ *  Get all vehicle reviews for an inventory item by inv_id
+ * ************************** */
+async function getReviewsByInvId(inv_id) {
+  try {
+    const data = await pool.query(
+      `SELECT r.review_id, r.review_text, r.review_date, r.inv_id, LEFT(a.account_firstname, 1) AS account_first_initial, a.account_lastname FROM review r JOIN account a ON r.account_id = a.account_id WHERE r.inv_id = $1 ORDER BY r.review_date DESC;`,
+      [inv_id]
+    )
+   
+    return data.rows || [];
+  } catch (error) {
+    console.error("getreviewssbyid error " + error)
+    throw error
+  }
+}
+
+/* ***************************
+ *  Submit review for an inventory item by inv_id
+ * ************************** */
+async function addReview(review_text, inv_id, account_id) {
+
+  try {
+    const sql= `INSERT INTO review (review_text, review_date, inv_id, account_id) VALUES ($1, now(), $2, $3) RETURNING *`
+    const data = await pool.query(sql, [review_text, inv_id, account_id])
+    
+    if (data.rowCount > 0) {
+      const reviewData = data.rows[0]
+      return reviewData
+    } else {
+      console.log('Could not add review vehicle.')
+    }
+  } catch (error) {
+    return error.message
+  }
+}
+
 /* ***************************************
  *  Insert a new classification into table
  * ************************************ */
@@ -93,7 +130,6 @@ async function insertVehicle(
 
     if (result.rowCount > 0) {
       const vehicle = result.rows[0]
-      console.log("Vehicle Returned from Insert:" +vehicle)
       return vehicle      
     } else {
       console.log('Could not find vehicle.')
@@ -143,7 +179,6 @@ async function updateVehicle(
 
     if (result.rowCount > 0) {
       const vehicle = result.rows[0]
-      console.log("Vehicle Returned from Insert:" + vehicle)
       return vehicle      
     } else {
       console.log('Could not find vehicle.')
@@ -182,6 +217,8 @@ module.exports = {
   getClassifications, 
   getInventoryByClassificationId, 
   getDetailsByInventoryId,
+  getReviewsByInvId,
+  addReview,
   insertClassification,
   insertVehicle,
   updateVehicle,

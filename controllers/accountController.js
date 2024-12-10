@@ -1,5 +1,6 @@
 const utilities = require("../utilities/")
 const accountModel = require("../models/account-model")
+const invModel = require("../models/inventory-model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -41,14 +42,20 @@ async function buildRegisterView(req, res, next) {
 
 // Build Account Management View
 async function buildAcctManagement(req, res, next) {
+  const account_id = parseInt(res.locals.accountData.account_id);
+
   try {
     let nav = await utilities.getNav()
 
-      res.render("account/management", {
-        title: "Account Management",
-        nav,
-        errors: null
-      })
+    const reveiws = await accountModel.getReviewsByActId(account_id)
+    const actReviewList = await utilities.buildActReviewList(reveiws)
+
+    res.render("account/management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+      actReviewList
+    })
 
   } catch (error) {
     console.error("Error building account management view: ", error);
@@ -65,19 +72,95 @@ async function buildEditView(req, res, next) {
 
     const accountData = await accountModel.getAccountByAccountId(account_id)
 
-      res.render("account/editAccount", {
-        title: "Edit Account",
-        nav,
-        errors: null,
-        account_id: accountData.account_id,
-        account_firstname: accountData.account_firstname,
-        account_lastname: accountData.account_lastname,
-        account_email: accountData.account_email,
-      })
+    res.render("account/editAccount", {
+      title: "Edit Account",
+      nav,
+      errors: null,
+      account_id: accountData.account_id,
+      account_firstname: accountData.account_firstname,
+      account_lastname: accountData.account_lastname,
+      account_email: accountData.account_email,
+    })
 
   } catch (error) {
     console.error("Error building edit account view: ", error);
     res.status(500).send("An error occurred while loading the edit account page.");
+  }
+}
+
+async function buildReviewEditView(req, res, next) {
+  try {
+    const reviewId = parseInt(req.params.review_id)
+
+    let nav = await utilities.getNav()
+
+    const reviewData = await accountModel.getReviewByReviewId(reviewId)
+
+    if (!reviewData) {
+      throw new Error("Review data not found")
+    }
+
+    const vehicleData = await invModel.getDetailsByInventoryId(reviewData.inv_id)
+
+    if (!vehicleData) {
+      throw new Error("Vehicle data not found")
+    }
+
+    const title = `Edit ${vehicleData.inv_year} ${vehicleData.inv_make} ${vehicleData.inv_model} Review`
+
+    console.log("Vehicle Data", vehicleData)
+
+    res.render("account/editReview", {
+      title,
+      nav,
+      errors: null,
+      reviewData,
+      vehicleData
+    })
+
+  } catch (error) {
+    console.error("Error building review edit view: ", error);
+    res.status(500).send("An error occurred while loading the edit review page.");
+  }
+}
+
+// DELETE Review View
+async function buildDeleteReviewView(req, res, next) {
+
+  const reviewId = parseInt(req.params.review_id)
+  console.log(reviewId)
+
+  try{    
+
+    let nav = await utilities.getNav()
+
+    const reviewData = await accountModel.getReviewByReviewId(reviewId)
+    console.log(reviewData)
+    if (!reviewData) {
+      throw new Error("Review data not found")
+    }
+
+    const vehicleData = await invModel.getDetailsByInventoryId(reviewData.inv_id)
+    console.log(vehicleData)
+    if (!vehicleData) {
+      throw new Error("Item data not found")
+    }
+
+    const title = `Delete ${vehicleData.inv_year} ${vehicleData.inv_make} ${vehicleData.inv_model} Review`
+    console.log(title)
+
+
+    res.render("account/deleteReview", {
+      title,
+      nav,
+      errors: null,
+      reviewData,
+      vehicleData
+    })
+
+  } catch (error) {
+    console.error("Error building delete review view:", error);
+    res.status(500).send("An error occurred while loading the delete review page.");
   }
 }
 
@@ -191,7 +274,6 @@ async function editAccountDetails(req, res, next) {
 
   if (editResult) {
     delete editResult.account_password
-    console.log(editResult)
     const accessToken = jwt.sign(editResult, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
 
     if(process.env.NODE_ENV === 'development') {
@@ -204,7 +286,6 @@ async function editAccountDetails(req, res, next) {
       "notice",
       `Congratulations, ${editResult.account_firstname} ${editResult.account_lastname}. Your account has been updated.`
     )
-    // return res.redirect("/account/")
     res.render('account/management', {
       title: 'Account Management',
       nav,
@@ -260,12 +341,71 @@ async function editPassword(req, res, next) {
     return res.redirect("/account/")
 
   } else {
-    req.flash("notice", "Sorry, the registration failed.")
+    req.flash("notice", "Sorry, the edit failed.")
     res.status(501).render("/account/management", {
       title: "Account Management",
       nav,
     })
   }
+}
+
+async function editReview(req, res, next) {
+  
+  let nav = await utilities.getNav()
+
+  const { review_date, review_text, review_id } = req.body
+  console.log("params to go to act model", req.body)
+  const editResult = await accountModel.editReview(
+    review_text, review_id
+  )
+  console.log("AC edit Results", editResult)
+  if (editResult) {
+    req.flash(
+      "notice",
+      `Congratulations,Your review has been updated.`
+    )
+
+    return res.redirect("/account/")
+
+  } else {
+    req.flash("notice", "Sorry, the review edit failed.")
+    res.status(501).render("/account/management", {
+      title: "Account Management",
+      nav,
+    })
+  }
+  
+}
+
+// DELETE a Review
+async function deleteReview(req, res, next) {
+    let nav = await utilities.getNav()    
+    const { review_id, inv_id, account_id} = req.body
+
+  try {
+    const reviewResult = await accountModel.deleteReview(review_id)
+
+    if (reviewResult) {
+      const reveiws = await accountModel.getReviewsByActId(account_id)
+      const actReviewList = await utilities.buildActReviewList(reveiws)
+
+      req.flash(
+        "notice",
+        `Congratulations! Your review was successfully deleted.`
+      )
+      res.render("account/management", {
+        title: "Account Management",
+        nav,
+        errors: null,
+        actReviewList
+      })
+    }    
+
+  } catch (error) {
+    console.error("Error deleting review: ", error);
+    res.status(500).send("An error occurred while deleting review.");
+  }
+  
 }
 
 async function accountLogout(req, res, next) {
@@ -274,7 +414,7 @@ async function accountLogout(req, res, next) {
 
     req.session.destroy((err) => {
       if (err) {
-        return next(err); // Handle any session destruction errors
+        return next(err)
       }
     res.redirect('/')
     })
@@ -286,12 +426,16 @@ async function accountLogout(req, res, next) {
   
 module.exports = { 
   buildLoginView, 
-  buildRegisterView, 
+  buildRegisterView,
+  buildDeleteReviewView, 
   registerAccount, 
   accountLogin, 
   buildAcctManagement,
   buildEditView,
+  buildReviewEditView,
   editAccountDetails,
   editPassword,
+  editReview,
+  deleteReview,
   accountLogout
 }

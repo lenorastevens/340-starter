@@ -4,6 +4,7 @@ const accountController = require("../controllers/accountController")
 const utilities = require("../utilities/")
 const regValidate = require('../utilities/account-validation')
 const logValidate = require('../utilities/login-validation')
+const reviewValidate = require('../utilities/review-validation')
 
 // Account View Route
 router.get(
@@ -14,7 +15,9 @@ router.get(
 router.get("/login", utilities.handleErrors(accountController.buildLoginView))
 router.get("/register", utilities.handleErrors(accountController.buildRegisterView))
 router.get("/edit/:account_id", utilities.handleErrors(accountController.buildEditView))
-router.get("/logout", utilities.handleErrors(accountController.accountLogout) )
+router.get("/review/edit/:review_id", utilities.handleErrors(accountController.buildReviewEditView))
+router.get("/logout", utilities.handleErrors(accountController.accountLogout))
+router.get("/review/delete/:review_id", utilities.handleErrors(accountController.buildDeleteReviewView))
 
 // Process Registration Post method
 router.post(
@@ -46,6 +49,18 @@ router.post (
     logValidate.passwordRules(),
     logValidate.checkPWData,
     utilities.handleErrors(accountController.editPassword)
+)
+
+router.post(
+    '/review/edit/',
+    reviewValidate.reviewRules(),
+    reviewValidate.checkReviewEdit,
+    utilities.handleErrors(accountController.editReview)
+)
+
+router.post(
+    '/review/delete/',
+    utilities.handleErrors(accountController.deleteReview)
 )
 
 module.exports = router;
